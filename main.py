@@ -1,3 +1,6 @@
+def get_filename():
+    input_file_name = input('What filename would you like to read?')
+    return input_file_name
 
 def read_file_to_list(filename):
     movie_table = []
@@ -65,7 +68,7 @@ def find_lowest_profit(movie_table):
     return lowest_row
 
 def main():
-    input_file_name = input('What filename would you like to read?')
+    input_file_name = get_filename()
     movie_table = read_file_to_list(input_file_name)
     add_profit_column(movie_table)
     write_list_to_file(movie_table, 'movies_output.txt')
