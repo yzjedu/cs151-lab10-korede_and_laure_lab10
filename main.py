@@ -6,9 +6,9 @@ def read_file_to_list(filename):
         file = open(filename, "r")
         for line in file:
             row = line.split(',')
-            row[-1] = int(row[-1])  # Convert worldwide gross to integer
-            row[-2] = int(row[-2])  # Convert domestic gross to integer
-            row[-3] = int(row[-3])  # Convert movie budget to integer
+            row[4] = int(row[4])  # Convert worldwide gross to integer
+            row[3] = int(row[3])  # Convert domestic gross to integer
+            row[2] = int(row[2])  # Convert movie budget to integer
             movie_table.append(row)
 
         file.close()  # Close the file after reading
@@ -38,9 +38,40 @@ def write_list_to_file(movie_table, filename):
     # Close the file
     fd.close()
 
+def find_highest_profit(movie_table):
+    # Initialize the first actress as the youngest for comparison
+    highest_row = movie_table[0]
+
+    # Iterate through each actress record
+    for row in movie_table:
+        # Check if the current actress is younger than the current youngest
+        if row[-1] < highest_row[-1]:  # Assuming age is at index 3
+            highest_row = row
+
+    # Return the data of the youngest actress
+    return highest_row
+
+def find_lowest_profit(movie_table):
+    # Initialize the first actress as the youngest for comparison
+    lowest_row = movie_table[0]
+
+    # Iterate through each actress record
+    for row in movie_table:
+        # Check if the current actress is younger than the current youngest
+        if row[-1] < lowest_row[-1]:  # Assuming age is at index 3
+            lowest_row = row
+
+    # Return the data of the youngest actress
+    return lowest_row
+
 def main():
-    input_file_name = input('')
+    input_file_name = input('What filename would you like to read?')
     movie_table = read_file_to_list(input_file_name)
     add_profit_column(movie_table)
-    output_file_name = input('')
-    write_list_to_file(movie_table, output_file_name)
+    write_list_to_file(movie_table, 'movies_output.txt')
+    highest_row = find_highest_profit(movie_table)
+    print(f'The movie with the highest profit is {highest_row}')
+    lowest_row = find_lowest_profit(movie_table)
+    print(f'The movie with the highest profit is {lowest_row}')
+
+main()
