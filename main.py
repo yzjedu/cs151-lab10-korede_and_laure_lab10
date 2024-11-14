@@ -9,9 +9,9 @@ def read_file_to_list(filename):
         file = open(filename, "r")
         for line in file:
             row = line.split(',')
-            row[4] = int(row[4])  # Convert worldwide gross to integer
-            row[3] = int(row[3])  # Convert domestic gross to integer
-            row[2] = int(row[2])  # Convert movie budget to integer
+            row[4] = int(float(row[4])) # Convert worldwide gross to integer
+            row[3] = int(float(row[3])) # Convert domestic gross to integer
+            row[2] = int(float(row[2]))  # Convert movie budget to integer
             movie_table.append(row)
 
         file.close()  # Close the file after reading
@@ -30,13 +30,17 @@ def add_profit_column(movie_table):
     return movie_table
 
 
-def write_list_to_file(movie_table, filename):
+def write_table_to_file(movie_table, filename):
     # Open the file for writing
     fd = open(filename, "a")
 
     # Write each item in the list to the file
     for row in movie_table:
-        fd.write(str(row) + ',')
+        line = row.join(',')
+        line += '\n'
+        fd.write(line)
+
+
 
     # Close the file
     fd.close()
@@ -71,7 +75,7 @@ def main():
     input_file_name = get_filename()
     movie_table = read_file_to_list(input_file_name)
     add_profit_column(movie_table)
-    write_list_to_file(movie_table, 'movies_output.txt')
+    write_table_to_file(movie_table, 'movies_output.txt')
     highest_row = find_highest_profit(movie_table)
     print(f'The movie with the highest profit is {highest_row}')
     lowest_row = find_lowest_profit(movie_table)
