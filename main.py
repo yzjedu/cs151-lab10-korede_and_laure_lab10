@@ -9,10 +9,10 @@ def read_file_to_list(filename):
         file = open(filename, "r")
         for line in file:
             row = line.split(',')
-            row[4] = int(float(row[4])) # Convert worldwide gross to integer
-            row[3] = int(float(row[3])) # Convert domestic gross to integer
-            row[2] = int(float(row[2]))  # Convert movie budget to integer
             movie_table.append(row)
+            row[4] = int(float(row[4]))  # Convert worldwide gross to integer
+            row[3] = int(float(row[3]))  # Convert domestic gross to integer
+            row[2] = int(float(row[2]))  # Convert movie budget to integer
 
         file.close()  # Close the file after reading
 
@@ -22,28 +22,21 @@ def read_file_to_list(filename):
     return movie_table
 
 
-def add_profit_column(movie_table):
-    for row in movie_table:
-        profit = row[-1]-row[-3]
-        row.append(profit)
-
-    return movie_table
-
-
-def write_table_to_file(movie_table, filename):
+def write_table_to_file(movie_table, output_filename):
     # Open the file for writing
-    fd = open(filename, "a")
+    outfile = open(output_filename, "w")
 
     # Write each item in the list to the file
     for row in movie_table:
-        line = row.join(',')
-        line += '\n'
-        fd.write(line)
-
-
+        profit = row[-1] - row[-3]
+        row.append(profit)
+        line = ''
+        for item in row:
+            line += str(item) + ','
+        outfile.write(line + '\n')
 
     # Close the file
-    fd.close()
+    outfile.close()
 
 def find_highest_profit(movie_table):
     # Initialize the first actress as the youngest for comparison
@@ -52,7 +45,7 @@ def find_highest_profit(movie_table):
     # Iterate through each actress record
     for row in movie_table:
         # Check if the current actress is younger than the current youngest
-        if row[-1] < highest_row[-1]:  # Assuming age is at index 3
+        if row[-1] > highest_row[-1]:  # Assuming age is at index 3
             highest_row = row
 
     # Return the data of the youngest actress
@@ -74,11 +67,10 @@ def find_lowest_profit(movie_table):
 def main():
     input_file_name = get_filename()
     movie_table = read_file_to_list(input_file_name)
-    add_profit_column(movie_table)
-    write_table_to_file(movie_table, 'movies_output.txt')
+    write_table_to_file(movie_table, 'movies_updated.csv')
     highest_row = find_highest_profit(movie_table)
     print(f'The movie with the highest profit is {highest_row}')
     lowest_row = find_lowest_profit(movie_table)
-    print(f'The movie with the highest profit is {lowest_row}')
+    print(f'The movie with the lowest profit is {lowest_row}')
 
 main()
