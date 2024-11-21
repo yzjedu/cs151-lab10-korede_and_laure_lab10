@@ -1,5 +1,6 @@
 # Algorithm Document
 
+----------------------
 * Purpose: get user input of which file to read
 * Name: get_input_filename
 * Parameters: none

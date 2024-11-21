@@ -4,7 +4,7 @@
 # Lab Assignment:  Lab 10
 # Problem Statement: analyze data on movies, their budgets, and their profits, creating a new file to update movies.csv with new values and make certain values searchable
 # Data In: input_filename (which file the user would like the program to read), output_filename (which file the user would like the program to write to)
-# Data Out:
+# Data Out: data for movie with the highest profit, data for movie with the lowest profit, outfile (.csv file, updated version of movies.csv)
 # Credits: Codes from our class repository and the readme file
 # Input Files: must be .csv, movies.csv expected
 
