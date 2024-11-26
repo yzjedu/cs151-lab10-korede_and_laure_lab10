@@ -1,4 +1,3 @@
-ENCRYPTED:
 # Reflection Document
 
 * Drive Full Name  : Laure Patera
